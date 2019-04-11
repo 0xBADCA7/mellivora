@@ -28,7 +28,14 @@ form_textarea('Flag', $challenge['flag']);
 form_input_checkbox('Automark', $challenge['automark']);
 form_input_checkbox('Case insensitive', $challenge['case_insensitive']);
 
-form_input_text('Points', $challenge['points']);
+//Don't show points when we have a dynamic challenge, to avoid confusion
+if ($challenge['decay'] == 0 && $challenge['min_points'] == 0) {
+    form_input_text('Points', $challenge['points']);
+}
+form_input_text('Init Points', $challenge['init_points']);
+form_input_text('Min Points', $challenge['min_points']);
+form_input_text('Decay', $challenge['decay']);
+
 form_input_text('Num attempts allowed', $challenge['num_attempts_allowed']);
 form_input_text('Min seconds between submissions', $challenge['min_seconds_between_submissions']);
 
