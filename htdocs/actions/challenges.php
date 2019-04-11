@@ -163,21 +163,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         );
         
         //also update the challenge itself
+	$new_points = $challenge['points'];
         if ($correct == true) {
             if ($challenge['decay'] != 0 && $challenge['min_points'] != 0) { //is Dynamic Challenge
 		if ($challenge['solves'] <= $challenge['decay']) {
 			$new_points = (($challenge['min_points'] - $challenge['init_points']) / ($challenge['decay'] * $challenge['decay'])) * ($challenge['solves'] * $challenge['solves']) + $challenge['init_points'];
-			db_update(
-			    'challenges',
-			    array(
-				'points' => $new_points,
-				'solves' => $challenge['solves'] + 1
-			    ),
-			    array('id' => $_POST['challenge'])
-			);
 		}
             }
         }
+	
+	db_update(
+		'challenges',
+		array(
+			'points' => $new_points,
+			'solves' => $challenge['solves'] + 1
+		),
+		array('id' => $_POST['challenge'])
+	);
+	    
         if (!$challenge['automark']) {
             redirect('challenges?status=manual');
         }
