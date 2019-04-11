@@ -17,6 +17,8 @@ form_input_checkbox('Automark', true);
 form_input_checkbox('Case insensitive');
 
 form_input_text('Points');
+form_input_text('Min Points');
+form_input_text('Decay');
 form_input_text('Num attempts allowed');
 form_input_text('Min seconds between submissions');
 
