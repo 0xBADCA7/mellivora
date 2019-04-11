@@ -99,7 +99,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($challenge['available_until'] && $time > $challenge['available_until']) {
             message_generic('Sorry','This challenge has expired.');
         }
+	
+	//also check the avalaibility of the category
+        $category = db_select_one(
+	    'categories',
+	    array(
+	        'id',
+	        'title',
+	        'description',
+	        'available_from',
+	        'available_until',
+                'exposed'
+	    ),
+	    array(
+	        'id'=>$challenge['category']
+	    )
+	);
+	
+	if ($category['available_from'] && $time < $category['available_from']) {
+            message_generic('Sorry','This category isn\'t available yet.');
+        }
 
+	if ($category['available_until'] && $time > $category['available_until']) {
+            message_generic('Sorry','This category has expired.');
+        }
+	
+	if ($challenge['exposed'] == false || $category['exposed'] == false) {
+            message_generic('Sorry','This challenge is not public yet.');
+        }
+	    
         $correct = false;
 
         // automark the submission
@@ -121,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
         }
-
+	
         db_insert(
             'submissions',
             array(
