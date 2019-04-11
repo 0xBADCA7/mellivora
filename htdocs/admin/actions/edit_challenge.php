@@ -10,6 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     validate_xsrf_token($_POST[CONST_XSRF_TOKEN_KEY]);
 
     if ($_POST['action'] == 'edit') {
+        $new_points = $_POST['points'];
+
+        if ($_POST['decay'] != 0 && $_POST['min_points'] != 0) { //We now have a Dynamic Challenge
+            if ($_POST['init_points'] == 0)
+                $_POST['init_points'] = $_POST['points'];
+            $new_points = (($_POST['min_points'] - $_POST['init_points']) / ($_POST['decay'] * $_POST['decay'])) * ($_POST['solves'] * $_POST['solves']) + $_POST['init_points'];
+        } else { //Challenge is static
+            $_POST['init_points'] = $_POST['points'];
+        }
 
        db_update(
             'challenges',
@@ -19,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'flag'=>$_POST['flag'],
                 'automark'=>$_POST['automark'],
                 'case_insensitive'=>$_POST['case_insensitive'],
-                'points'=>$_POST['points'],
+                'points'=>$new_points,
                 'init_points'=>$_POST['init_points'],
                 'min_points'=>$_POST['min_points'],
                 'decay'=>$_POST['decay'],
