@@ -38,6 +38,7 @@ if ($challenge['decay'] == 0 && $challenge['min_points'] == 0) {
 form_input_text('Init Points', $challenge['init_points']);
 form_input_text('Min Points', $challenge['min_points']);
 form_input_text('Decay', $challenge['decay']);
+form_hidden('Solves', $challenge['solves']);
 
 form_input_text('Num attempts allowed', $challenge['num_attempts_allowed']);
 form_input_text('Min seconds between submissions', $challenge['min_seconds_between_submissions']);
