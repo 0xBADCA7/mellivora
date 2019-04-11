@@ -15,9 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($_POST['decay'] != 0 && $_POST['min_points'] != 0) { //We now have a Dynamic Challenge
             if ($_POST['init_points'] == 0)
                 $_POST['init_points'] = $_POST['points'];
-            if ($_POST['solves'] <= $_POST['decay']) {
+            if ($_POST['solves'] < $_POST['decay']) {
                 $new_points = (($_POST['min_points'] - $_POST['init_points']) / ($_POST['decay'] * $_POST['decay'])) * ($_POST['solves'] * $_POST['solves']) + $_POST['init_points'];
-            }
+            } else {
+			    $new_points = $_POST['min_points'];
+		    }
         } else { //Challenge is static
             $_POST['init_points'] = $_POST['points'];
         }
