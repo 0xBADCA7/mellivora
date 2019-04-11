@@ -68,10 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'category',
                 'case_insensitive',
                 'automark',
+		        'init_points',
+		        'min_points',
+		        'solves',
+		        'decay',
                 'available_from',
                 'available_until',
                 'num_attempts_allowed',
-                'min_seconds_between_submissions'
+                'min_seconds_between_submissions',
+                'exposed'
             ),
             array(
                 'id' => $_POST['challenge']
