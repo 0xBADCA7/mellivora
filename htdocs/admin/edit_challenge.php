@@ -31,7 +31,10 @@ form_input_checkbox('Case insensitive', $challenge['case_insensitive']);
 //Don't show points when we have a dynamic challenge, to avoid confusion
 if ($challenge['decay'] == 0 && $challenge['min_points'] == 0) {
     form_input_text('Points', $challenge['points']);
+} else {
+	form_hidden('Points', $challenge['points']);
 }
+
 form_input_text('Init Points', $challenge['init_points']);
 form_input_text('Min Points', $challenge['min_points']);
 form_input_text('Decay', $challenge['decay']);
